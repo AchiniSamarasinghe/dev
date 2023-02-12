@@ -132,15 +132,110 @@ node ./index.js
 ____________________________________________________________________
 
 
+____________________CREATE________________________________________________
+
+const { query } = require("express");
+const { database } = require("firebase-admin");
+var admin = require("firebase-admin");
+
+var serviceAccount = require("./serviceAccountKey.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
+// const db=admin.firestore();
+// let university = db.collection("seusl");
+
+// university.get().then((query) =>{
+//     query.forEach(document =>{
+//         console.log(document.data());
+//     })
+
+// })
+const db=admin.firestore();
+
+let seusl=db.collection("seusl");
+
+seusl.get().then((query) =>{
+  query.forEach(document=>{
+    console.log(document.data());
+  })
+}
+)
+
+
+________________INSERT_________________
+
+var admin = require("firebase-admin");
+
+var serviceAccount = require("./serviceAccountKey.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
+const db=admin.firestore();
+const data = {
+            id:3,
+            name:"inu",
+            faculty:"efac",
+            department:"sl",
+            yer:2023,
+}
+const data1={
+            id:4,
+            name:"gota",
+            faculty:"fia",
+            department:"sl",
+            yer:2023,
+
+}
+const data2={
+            id:5,
+            name:"basil",
+            faculty:"arts",
+            department:"sl",
+            yer:2023
+
+}
+//db.collection("seusl").doc(data.name.toString()).set(data);
+db.collection("seusl").doc(data.id.toString()).set(data);
+db.collection("seusl").doc(data1.id.toString()).set(data1);
+db.collection("seusl").doc(data.id.toString()).set(data2)
 
 
 
 
+_________________DELETE______________________________
 
 
+var admin = require("firebase-admin");
+
+var serviceAccount = require("./serviceAccountKey.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
+const db=admin.firestore();
+db.collection("seusl").doc("ranil").delete().then(res=>{
+    console.log("Delted ranil!")
+})
+
+_________________UPDATE______________________________
 
 
+var admin = require("firebase-admin");
 
+var serviceAccount = require("./serviceAccountKey.json");
 
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
 
+const db=admin.firestore();
 
+db.collection("seusl").doc("1").onSnapshot(update=>{
+    console.log(update.data());
+});
